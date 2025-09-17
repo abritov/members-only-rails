@@ -1,16 +1,72 @@
+<!-- app/views/posts/index.html.erb -->
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Posts" %>
 
 <h1>Posts</h1>
 
-<div id="posts">
-  <% @posts.each do |post| %>
-    <%= render post %>
-    <p>
-      <%= link_to "Show this post", post %>
-    </p>
+<!-- Inline Post Creation Form -->
+<div class="post-form-container" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e0e0e0;">
+  <h3 style="margin-top: 0; color: #333;">Create New Post</h3>
+
+  <%= form_with(model: @post, local: true) do |form| %>
+    <% if @post.errors.any? %>
+      <div style="color: #d32f2f; background: #ffebee; padding: 10px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #ffcdd2;">
+        <h4 style="margin: 0 0 10px 0;">Couldn't create post:</h4>
+        <ul style="margin: 0; padding-left: 20px;">
+          <% @post.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div style="margin-bottom: 15px;">
+      <%= form.label :title, "Title", style: "display: block; font-weight: 500; margin-bottom: 5px; color: #333;" %>
+      <%= form.text_field :title,
+            style: "width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;",
+            placeholder: "Enter post title..." %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= form.label :body, "Content", style: "display: block; font-weight: 500; margin-bottom: 5px; color: #333;" %>
+      <%= form.text_area :body,
+            rows: 4,
+            style: "width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; resize: vertical;",
+            placeholder: "Write your post content here..." %>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 15px;">
+      <span style="font-size: 12px; color: #666;">
+        Posting as: <strong><%= current_user.email %></strong>
+      </span>
+      <%= form.submit "Create Post",
+            style: "background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 500;",
+            onmouseover: "this.style.background='#0056b3'",
+            onmouseout: "this.style.background='#007bff'" %>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New post", new_post_path %>
+<!-- Posts List -->
+<div id="posts">
+  <% if @posts.any? %>
+    <% @posts.each do |post| %>
+      <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <%= render post %>
+
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0f0f0;">
+          <%= link_to "Show this post", post,
+                style: "color: #007bff; text-decoration: none; font-weight: 500;",
+                onmouseover: "this.style.textDecoration='underline'",
+                onmouseout: "this.style.textDecoration='none'" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div style="text-align: center; padding: 40px; background: white; border-radius: 8px; border: 1px solid #e0e0e0;">
+      <h3 style="color: #666; margin-bottom: 10px;">No posts yet</h3>
+      <p style="color: #999;">Be the first to create a post!</p>
+    </div>
+  <% end %>
+</div>
