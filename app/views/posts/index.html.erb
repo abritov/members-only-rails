@@ -5,79 +5,16 @@
 
 <div class="min-h-screen bg-gradient-to-br from-gray-900 to-black py-8 px-4 sm:px-6 lg:px-8">
   <div class="max-w-4xl mx-auto">
-    <!-- Header -->
-    <div class="bg-gradient-to-r from-purple-900 via-blue-900 to-gray-900 p-6 rounded-2xl shadow-2xl text-center border border-gray-700 mb-8">
-      <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-2">CLUBHOUSE FEED</h1>
-      <p class="text-sm text-gray-300">Anonymous discussions in the exclusive members area</p>
-    </div>
-
-    <!-- Inline Post Creation Form -->
-    <% if user_signed_in? %>
-      <div class="bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-700 mb-8">
-        <div class="bg-gradient-to-r from-purple-900 via-blue-900 to-gray-900 p-6 border-b border-gray-700">
-          <h2 class="text-xl font-semibold text-center text-gray-200">Create New Post</h2>
-        </div>
-
-        <div class="p-6">
-          <%= form_with(model: @post, local: true, html: { class: "space-y-6" }) do |form| %>
-            <% if @post.errors.any? %>
-              <div class="bg-red-900/50 border border-red-700 rounded-lg p-4">
-                <h4 class="text-red-200 font-medium mb-2">Couldn't create post:</h4>
-                <ul class="text-red-300 text-sm space-y-1">
-                  <% @post.errors.each do |error| %>
-                    <li>• <%= error.full_message %></li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
-
-            <div class="field">
-              <%= form.label :title, "Title", class: "block text-sm font-medium text-gray-400 mb-2" %>
-              <%= form.text_field :title,
-                    class: "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200",
-                    placeholder: "Enter post title..." %>
-            </div>
-
-            <div class="field">
-              <%= form.label :body, "Content", class: "block text-sm font-medium text-gray-400 mb-2" %>
-              <%= form.text_area :body,
-                    rows: 4,
-                    class: "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 resize-vertical",
-                    placeholder: "Share your thoughts with the exclusive community..." %>
-            </div>
-
-            <div class="flex items-center justify-between pt-4 border-t border-gray-700">
-              <span class="text-sm text-gray-400">
-                Posting as: <strong class="text-purple-400"><%= current_user.email %></strong>
-              </span>
-              <%= form.submit "Publish Post",
-                    class: "px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg shadow-lg transform hover:scale-105 transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-800 cursor-pointer" %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% else %>
-      <!-- Sign in prompt for non-members -->
-      <div class="bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-700 mb-8 p-6 text-center">
-        <div class="bg-gradient-to-r from-purple-900 via-blue-900 to-gray-900 p-4 rounded-lg mb-4">
-          <h3 class="text-lg font-semibold text-gray-200">Exclusive Content</h3>
-        </div>
-        <p class="text-gray-400 mb-4">Join the clubhouse to participate in discussions</p>
-        <%= link_to "Sign In", new_user_session_path,
-              class: "px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg shadow-lg transform hover:scale-105 transition duration-200 inline-block" %>
-      </div>
-    <% end %>
-
-    <!-- Posts List -->
-    <div id="posts" class="space-y-6">
+    <!-- Posts List - First thing users see -->
+    <div id="posts" class="space-y-6 mb-8">
       <% if @posts.any? %>
         <% @posts.each do |post| %>
-          <div class="bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-700">
+          <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700">
             <!-- Post Header -->
             <div class="bg-gradient-to-r from-purple-900/50 via-blue-900/50 to-gray-900/50 p-4 border-b border-gray-700">
               <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                  <div class="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center">
+                  <div class="w-9 h-9 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center">
                     <span class="text-white font-bold text-sm">
                       <%= post.user.email[0].upcase %>
                     </span>
@@ -107,8 +44,8 @@
           </div>
         <% end %>
       <% else %>
-        <!-- Empty state -->
-        <div class="bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-700 p-8 text-center">
+        <!-- Empty state when no posts for signed-in user -->
+        <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 p-8 text-center">
           <div class="bg-gradient-to-r from-purple-900/50 via-blue-900/50 to-gray-900/50 p-6 rounded-lg mb-6">
             <svg class="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -117,7 +54,7 @@
           <h3 class="text-xl font-semibold text-gray-200 mb-2">No posts yet</h3>
           <p class="text-gray-400 mb-4">
             <% if user_signed_in? %>
-              Be the first to share something with the community!
+              Be the first to share something!
             <% else %>
               Sign in to create the first post in our exclusive clubhouse
             <% end %>
@@ -129,6 +66,57 @@
         </div>
       <% end %>
     </div>
+
+    <!-- Subtle, Non-Obtrusive, and Slightly Transparent Post Creation Form -->
+    <% if user_signed_in? %>
+      <div class="bg-gray-800/70 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 mb-8">
+        <div class="p-4">
+          <%= form_with(model: @post, local: true, html: { class: "space-y-3" }) do |form| %>
+            <% if @post.errors.any? %>
+              <div class="bg-red-900/50 border border-red-700 rounded-lg p-3 text-sm mb-3">
+                <h4 class="text-red-200 font-medium mb-1">Couldn't create post:</h4>
+                <ul class="text-red-300 text-xs space-y-0.5">
+                  <% @post.errors.each do |error| %>
+                    <li>• <%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 flex-shrink-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                <%= current_user.email[0].upcase %>
+              </div>
+              <div class="flex-grow space-y-2">
+                <%= form.text_field :title,
+                      class: "w-full px-3 py-2 bg-gray-700/60 border border-gray-600/70 rounded-lg text-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition duration-200",
+                      placeholder: "Title (optional)" %>
+                <%= form.text_area :body,
+                      rows: 2,
+                      class: "w-full px-3 py-2 bg-gray-700/60 border border-gray-600/70 rounded-lg text-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition duration-200 resize-y",
+                      placeholder: "What's happening in the clubhouse?" %>
+              </div>
+            </div>
+
+            <div class="flex justify-end pt-2 border-t border-gray-700/50">
+              <%= form.submit "Post",
+                    class: "px-4 py-1.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-sm font-medium rounded-lg shadow-md transform hover:scale-105 transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-800/70 cursor-pointer" %> <%# Smaller button %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <!-- Sign in prompt for non-members - still second -->
+      <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 mb-8 p-6 text-center">
+        <div class="bg-gradient-to-r from-purple-900 via-blue-900 to-gray-900 p-4 rounded-lg mb-4">
+          <h3 class="text-lg font-semibold text-gray-200">Exclusive Content</h3>
+        </div>
+        <p class="text-gray-400 mb-4">Join the clubhouse to participate in discussions</p>
+        <%= link_to "Sign In", new_user_session_path,
+              class: "px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg shadow-lg transform hover:scale-105 transition duration-200 inline-block" %>
+      </div>
+    <% end %>
+
   </div>
 
   <!-- Footer -->
