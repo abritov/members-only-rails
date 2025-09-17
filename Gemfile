@@ -58,3 +58,4 @@ end
 gem "devise", "~> 4.9"
 
 gem "tailwindcss-rails", group: :development
+gem 'unpoly-rails', '~> 3.10', '>= 3.10.2'

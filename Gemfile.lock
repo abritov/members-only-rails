@@ -145,6 +145,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.3)
+    memoized (1.1.2)
     mini_mime (1.1.5)
     minitest (5.25.5)
     msgpack (1.8.0)
@@ -328,6 +329,11 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
+    unpoly-rails (3.11.0)
+      actionpack (>= 3.2)
+      activesupport (>= 3.2)
+      memoized
+      railties (>= 3.2)
     uri (1.0.3)
     useragent (0.16.11)
     warden (1.2.9)
@@ -378,6 +384,7 @@ DEPENDENCIES
   tailwindcss-rails
   thruster
   tzinfo-data
+  unpoly-rails (~> 3.10, >= 3.10.2)
   web-console
 
 BUNDLED WITH
