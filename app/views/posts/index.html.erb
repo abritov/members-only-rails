@@ -5,6 +5,18 @@
 
 <div class="min-h-screen bg-gradient-to-br from-gray-900 to-black py-8 px-4 sm:px-6 lg:px-8">
   <div class="max-w-4xl mx-auto">
+    <!-- Sign out/Sign In button at the top right -->
+    <div class="text-right mb-4">
+      <% if user_signed_in? %>
+        <%= form_with url: destroy_user_session_path, method: :delete, class: "inline-block" do %>
+          <%= button_tag "Sign out", type: "submit", data: { confirm: "Are you sure?" },
+                class: "inline-flex items-center px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg transition duration-200 text-sm font-medium cursor-pointer" %>
+        <% end %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path,
+              class: "inline-flex items-center px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition duration-200 text-sm font-medium" %>
+      <% end %>
+    </div>
     <!-- Posts List - First thing users see -->
     <div id="posts" class="space-y-6 mb-8">
       <% if @posts.any? %>
