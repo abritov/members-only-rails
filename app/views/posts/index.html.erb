@@ -39,8 +39,7 @@
             <!-- Post Actions -->
             <div class="px-6 pb-4">
               <%= link_to "View Post", post,
-                    class: "inline-flex items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition duration-200 text-sm font-medium",
-                    data: { "unpoly" => true } %>
+                    class: "inline-flex items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition duration-200 text-sm font-medium" %>
             </div>
           </div>
         <% end %>
@@ -72,7 +71,7 @@
     <% if user_signed_in? %>
       <div class="bg-gray-800/70 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 mb-8">
         <div class="p-4">
-          <%= form_with(model: @post, local: false, html: { class: "space-y-3", data: { "turbo" => false } }) do |form| %>
+          <%= form_with(model: @post, local: true, html: { class: "space-y-3" }) do |form| %>
             <% if @post.errors.any? %>
               <div class="bg-red-900/50 border border-red-700 rounded-lg p-3 text-sm mb-3">
                 <h4 class="text-red-200 font-medium mb-1">Couldn't create post:</h4>
@@ -101,8 +100,7 @@
 
             <div class="flex justify-end pt-2 border-t border-gray-700/50">
               <%= form.submit "Post",
-                    class: "px-4 py-1.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-sm font-medium rounded-lg shadow-md transform hover:scale-105 transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-800/70 cursor-pointer",
-                    data: { "unpoly" => true, "unpoly-target" => "#posts" } %> <%# Smaller button %>
+                    class: "px-4 py-1.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-sm font-medium rounded-lg shadow-md transform hover:scale-105 transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-800/70 cursor-pointer" %> <%# Smaller button %>
             </div>
           <% end %>
         </div>
@@ -120,7 +118,6 @@
     <% end %>
 
   </div>
-
 
   <!-- Footer -->
   <div class="max-w-4xl mx-auto mt-8 text-center">
