@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.includes(:user).all.order(created_at: :desc)
     @post = Post.new if user_signed_in?  # For the inline form on index page
   end
 

@@ -20,7 +20,11 @@
                     </span>
                   </div>
                   <div>
-                    <p class="text-sm font-medium text-gray-300">Anonymous Member</p>
+                    <% if user_signed_in? %>
+                      <p class="text-sm font-medium text-gray-300"><%= post.user.name || post.user.email %></p>
+                    <% else %>
+                      <p class="text-sm font-medium text-gray-300">Anonymous Member</p>
+                    <% end %>
                     <p class="text-xs text-gray-500"><%= time_ago_in_words(post.created_at) %> ago</p>
                   </div>
                 </div>
